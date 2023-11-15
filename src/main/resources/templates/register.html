@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+<head th:replace="~{fragments::head}"/>
+<body>
+  <!--Navbar-->
+  <section th:replace="~{fragments::header}"/>
+  <!-- Msg alertas -->
+  <section th:replace="~{fragments::alerts-msg}"/>
+  <!--Formulario-->
+  <section>
+    <div class="container-fluid p-4">
+      <div class="container-md p-4" >
+        <h1 class="text-center">Register User</h1>
+        <div class="container-sm d-flex justify-content-center" style="width: 60rem">
+          <div class="row p-4">
+            <form
+                    th:action="@{/auth-user/register}"
+                    th:object="${userRequest}"
+                    method="post">
+              <div class="row g-3 p-2">
+                <!-- email --->
+                <div class="col">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control" id="floatingInputEmail" placeholder="Enter email" th:field="*{email}">
+                    <label for="floatingInputEmail">Email</label>
+                    <small class="form-text text-danger " th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></small>
+                  </div>
+                </div>
+                <!-- password --->
+                <div class="col">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputPassword" placeholder="Enter password" th:field="*{password}">
+                    <label for="floatingInputPassword">Password</label>
+                    <small class="form-text text-danger " th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></small>
+                  </div>
+                </div>
+              </div>
+              <div class="row g-3 p-2">
+                <!-- name --->
+                <div class="col">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputName" th:field="*{name}">
+                    <label for="floatingInputName">Name</label>
+                    <small class="form-text text-danger " th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></small>
+                  </div>
+                </div>
+                <!-- roles --->
+                <div class="col ">
+                  <div class="form-group">
+                    <label for="roles">Roles:</label>
+                      <div th:each="role : ${availableRoles}" class="form-check">
+                        <input type="checkbox" th:field="*{roles}" th:value="${role.id}" class="form-check-input"
+                               th:id="${role.name}"/>
+                        <label th:for="${role.name}" class="form-check-label" th:text="${role.name}"></label>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!--button register-->
+              <div class="row g-3 p-2">
+                <button type="submit" class="btn btn-outline-success col-lg-12">Register</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--Bootstrap-->
+  <section th:replace="~{fragments::bootstrapJs}"/>
+</body>
+</html>
